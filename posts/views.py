@@ -17,13 +17,6 @@ User = get_user_model()
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    """
-    list:
-      - ?feed=1 — показати пости від тих, на кого підписаний користувач (та свої)
-      - ?author=<username> — пости конкретного автора
-      - ?hashtag=python — пости з тегом
-      - ?search=текст — пошук по тексту постів
-    """
     queryset = Post.objects.select_related("author").all()
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]

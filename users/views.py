@@ -36,13 +36,6 @@ class LogoutView(APIView):
 
 
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    list: Пошук/перегляд профілів (?search=username/bio/email)
-    retrieve: Перегляд чужого профілю
-    me: Перегляд/оновлення мого профілю
-    follow/unfollow: Дії підписки
-    followers/following: Списки
-    """
     queryset = Profile.objects.select_related("user").all()
     serializer_class = ProfileSerializer
     permission_classes = [permissions.AllowAny]
@@ -74,7 +67,7 @@ class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     def follow(self, request, pk=None):
         target = self.get_object().user
         if target == request.user:
-            return Response({"detail": "Неможливо підписатися на себе."}, status=400)
+            return Response({"detail": "Can't subcribe on yourself."}, status=400)
         Follow.objects.get_or_create(follower=request.user, following=target)
         return Response(status=204)
 
