@@ -11,8 +11,8 @@ def publish_scheduled_posts():
         post = Post.objects.create(
             author=item.author,
             text=item.text,
-            image=item.image,        # зауваження: у продакшн краще копіювати файл
-            hashtags=[],             # будуть перераховані в serializer при класичному створенні
+            image=item.image,
+            hashtags=[],
         )
         item.processed = True
         item.save(update_fields=["processed"])
